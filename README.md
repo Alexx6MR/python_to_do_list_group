@@ -7,7 +7,7 @@ This is the group project of nackademin's programming course 1 of the DevsOps en
 2. [Gabriel Sosa](https://github.com/SOSA-DO)
 3. [Viktor Luu](https://github.com/Viktorluu)
 4. [Khilkhil Hossain](https://github.com/psyduckkills)
-5. [Nathan](https://github.com/ )
+5. [Nathan Feldman](https://github.com/NathanJFeldman)
 
 
 ## Project Description
