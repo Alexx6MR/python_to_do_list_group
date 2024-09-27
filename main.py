@@ -1,8 +1,8 @@
-from src.todoList import TodoList
+from src.todolist import ToDoList
 
 
 def main():
-   setup = TodoList()
+   setup = ToDoList()
    setup.Start()
 
 
