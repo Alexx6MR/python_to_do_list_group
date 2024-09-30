@@ -1,12 +1,10 @@
 import sys
 from src.todo_list import ToDoList
 from src.user_interface import UI
-from src.Databas import DatabasManager
 from src.user import User
 
 todo_list = ToDoList()
 interface = UI()
-databas = DatabasManager()
 current_user = User()
 
 #* Make the program to finish and print a message
@@ -27,53 +25,20 @@ def LogOut()->None:
    
    
 #* Login In 
-def LogIn()->None:
+def LoginScreen()->None:
+    current_user.Login()
     print("")
-    print("**Sign In**")
-    print("**Please introduce your userName and Password**")
-        
-    while True:
-        user_input: dict = interface.input_menu()
-        logged_user: dict = databas.login_user(username=user_input["username"], password=user_input["password"])
-                
-        if(logged_user == None):            
-            print("**It seems that you dont have an account, do you want to register?**")
-            interface.MenuUI(userInputText="Select a number: ", 
-            menuOptions=[
-                {"title": "Sign Up for free", "action":Register},
-                {"title": "Try again", "action":LogIn},
-                {"title": "Exit", "action":ExitGame},
-
-            ])
-        current_user.set_user(user_id=logged_user["id"], user_name=logged_user["username"])
-        print("")
-        print("***Welcome***")            
-        Menu()
+    print("***Welcome***")            
+    Menu()    
 
 #* Register
-def Register()->None:
-    
-    print("")
-    print("**Sign Up**")
-    print("**Please introduce your userName and Password**")
-        
-    while True:
-        user_input: dict = interface.input_menu()
-        res_status: int = databas.register_user(username=user_input["username"], password=user_input["password"])
-        if(res_status == 201):
-            print(f"Welcome {user_input["username"]}")
-            LogIn()
-            break
-        elif res_status == 403:
-            print("**It seems like this account is already registered, do you want to log in?**")
-            interface.MenuUI(userInputText="Select a number: ", 
-            menuOptions=[
-               {"title": "Login to Your To do list", "action":LogIn},
-               {"title": "Exit", "action":ExitGame},
-
-            ])
+def RegisterScreen()->None:
+    current_user.Register()
+    LoginScreen()
 
 
+
+#* Menu to handle all the pages (AUTH)
 def Menu()->None:
     interface.MenuUI(userInputText="Select a number: ", 
         menuOptions=[
@@ -191,8 +156,8 @@ def main():
    #* Main Menu to Controll the Game
    interface.MenuUI(userInputText="Select a number: ", 
             menuOptions=[
-               {"title": "Login to Your To do list", "action":LogIn},
-               {"title": "Sign UP for free", "action":Register},
+               {"title": "Login to Your To do list", "action":LoginScreen},
+               {"title": "Sign UP for free", "action":RegisterScreen},
                {"title": "Exit the Game", "action":ExitGame},
 
         ])

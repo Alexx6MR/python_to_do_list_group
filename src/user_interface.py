@@ -43,7 +43,7 @@ class UI:
         print("_________________")
         user_password_input:str = pyip.inputStr("Password: ") 
         
-        return dict(username=user_name_input, password=user_password_input )
+        return dict(username=user_name_input.lower(), password=user_password_input.lower())
     
     
     def input_field(message:str, is_text:bool=True)->str:
