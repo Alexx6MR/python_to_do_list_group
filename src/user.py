@@ -45,16 +45,18 @@ class User:
             user_input: dict = self.interface.input_menu()
             logged_user: dict = self.databas.login_user(username=user_input["username"], password=user_input["password"])
                 
-            if(logged_user == None):            
+            if(logged_user):    
+                self.set_user(user_id=logged_user["id"], user_name=logged_user["username"])
+                break    
+            else:
                 print("**It seems that you dont have an account, do you want to register?**")
                 self.interface.MenuUI(userInputText="Select a number: ", 
-                menuOptions=[
-                {"title": "Sign Up for free", "action":self.Register},
-                {"title": "Try again", "action":self.Login},
-
-                ])
-            self.set_user(user_id=logged_user["id"], user_name=logged_user["username"])
-            break
+                    menuOptions=[
+                        {"title": "Sign Up for free", "action":self.Register},
+                        {"title": "Try again", "action":self.Login},
+                    ])
+           
+     
             
            
         
