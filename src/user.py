@@ -5,6 +5,7 @@ class User:
     def __init__(self):
         self.user_id: int
         self.user_name: str
+        self.user_taskId: int
         self.task_list: list = []
         self.databas = DatabasManager()
         self.interface = UI()
@@ -56,9 +57,7 @@ class User:
                         {"title": "Try again", "action":self.Login},
                     ])
            
-     
-            
-           
+          
         
     #* Register
     def Register(self)->None:
@@ -66,6 +65,9 @@ class User:
         print("")
         print("**Sign Up**")
         print("**Please introduce your userName and Password**")
+        
+        def login():
+            return
         
         while True:
             user_input: dict = self.interface.input_menu()
@@ -75,7 +77,7 @@ class User:
                 self.interface.MenuUI(userInputText="Select a number: ", 
                 menuOptions=[
                 {"title": "Try again", "action":self.Register},
-                {"title": "Log in", "action":self.Login},
+                {"title": "Log in", "action":login},
                
 
             ])
