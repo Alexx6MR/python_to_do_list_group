@@ -29,6 +29,13 @@ class DatabasManager:
         self.do_query_data(sql, None)
 
     def initialDB(self) -> None:
+        #* Create the User Table if not exits
+        self.do_query('''CREATE TABLE IF NOT EXISTS user(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL,
+            password TEXT NOT NULL
+        )''')
+
         #* Create the task_list Table if not exits
         self.do_query('''CREATE TABLE IF NOT EXISTS task_list(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
