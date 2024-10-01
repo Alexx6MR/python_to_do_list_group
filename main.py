@@ -15,30 +15,26 @@ def ExitGame()->None:
    print()
    sys.exit(0)
 
-
+#* Function to send a message when the user wants to end the session
 def LogOut()->None:
     print()
     print("!!!The Session is close!!!")
     print()
     main()
    
-   
-   
-#* Login In 
+#* Simulation of a login screen
 def LoginScreen()->None:
     current_user.Login()
     print("")
     print("***Welcome***")            
     Menu()    
 
-#* Register
+#* Simulation of a Register screen
 def RegisterScreen()->None:
     current_user.Register()
     LoginScreen()
 
-
-
-#* Menu to handle all the pages (AUTH)
+#* Menu to handle all the "pages"
 def Menu()->None:
     interface.MenuUI(userInputText="Select a number: ", 
         menuOptions=[
@@ -49,27 +45,20 @@ def Menu()->None:
             {"title": "log Out", "action":LogOut},
 ])
 
-
-
-
-
+#* Simulation of a Add Task screen
 def AddTaskScreen()->None:
     print()
     print("**Welcome please add a new task**")
     user_input: str = UI.input_field(message="Add new task: ")
     todo_list.add_tasks(task=user_input, user_id=current_user.user_id)
-  
     Menu()
     
-
-
+#* Simulation of a Show Task screen
 def ShowTaskScreen()->None:
     print()
     print("**Here are all the tasks**")
     print()
-    
     todo_list.show_tasks(user_id=current_user.user_id)
-    
     interface.MenuUI(userInputText="Select a number: ", 
         menuOptions=[
         {"title": "Add Task", "action":AddTaskScreen},
@@ -78,19 +67,13 @@ def ShowTaskScreen()->None:
         {"title": "Log out", "action":LogOut},
     ])
     
-    
-    
-    
-
+#* Simulation of a Remove Task screen
 def RemoveTaskScreen()->None:
-    task_list:list = todo_list.get_tasks(user_id=current_user.user_id)
-    
-    interface.Not_task(route=Menu, task_list=task_list, message="----You dont have task to Remove ---")
-  
+    todo_list.show_tasks(user_id=current_user.user_id)
     print()
     print("**Here can you remove one task**")
     print("_________")
-    user_input: int = UI.input_field(is_text=False, message="Select Task to remove: ")
+    user_input: int = UI.input_field(is_text=False, message="Select The Task ID to remove: ")
     
     todo_list.remove_tasks(task_id=user_input, user_id=current_user.user_id)
     
@@ -100,21 +83,17 @@ def RemoveTaskScreen()->None:
         {"title": "Go back", "action":Menu},
     ])
 
- 
-
-
+#* Simulation of a Update Task screen
 def UpdateTaskScreen()->None:
-    task_list:list = todo_list.get_tasks(user_id=current_user.user_id)
-    
-    interface.Not_task(route=Menu, task_list=task_list, message="----You dont have task to Update ---")
+    todo_list.show_tasks(user_id=current_user.user_id)
         
     print()
-    print("**Here you can Updated one task**")
+    print("**Select the id to update the task**")
     
     def ChangeStatus()->None:
         todo_list.show_tasks(user_id=current_user.user_id)
         print("_________")
-        user_input: int = UI.input_field(is_text=False, message="What task is done: ")        
+        user_input: int = UI.input_field(is_text=False, message="Select The Task Id to Change: ")        
         todo_list.completed_task(task_id=user_input, user_id=current_user.user_id)
         interface.MenuUI(userInputText="Select a number: ", 
             menuOptions=[
@@ -144,9 +123,8 @@ def UpdateTaskScreen()->None:
         {"title": "Go back", "action":Menu},
     ])
     
-    
 
-
+#* App Entry Point 
 def main():
    print("")
    print("**Welcome to Your To do list**")
@@ -157,8 +135,8 @@ def main():
    interface.MenuUI(userInputText="Select a number: ", 
             menuOptions=[
                {"title": "Login to Your To do list", "action":LoginScreen},
-               {"title": "Sign UP for free", "action":RegisterScreen},
-               {"title": "Exit the Game", "action":ExitGame},
+               {"title": "Register for free", "action":RegisterScreen},
+               {"title": "Exit", "action":ExitGame},
 
         ])
 

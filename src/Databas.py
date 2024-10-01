@@ -8,7 +8,7 @@ class DatabasManager:
         self.to_do_connection.row_factory = sqlite3.Row # Fixar hur man får information från databasen.
         self.cursor = self.to_do_connection.cursor()
         self.logger = FileLogger('db.log')
-        self.create_list()
+        self.initialDB()
 
     def do_query_data(self, sql, data) -> None:
         try:
@@ -28,26 +28,22 @@ class DatabasManager:
     def do_query(self, sql) -> None:
         self.do_query_data(sql, None)
 
-    def create_list(self) -> None:
-        #* Create the User Table if not exits
-        self.do_query('''CREATE TABLE IF NOT EXISTS user(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
-            password TEXT NOT NULL
-        )''')
-
+    def initialDB(self) -> None:
         #* Create the task_list Table if not exits
         self.do_query('''CREATE TABLE IF NOT EXISTS task_list(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER,
+            task_number INTEGER,
             task TEXT NOT NULL,
             status BOOLEAN DEFAULT 0,
-            FOREIGN KEY (user_id) REFERENCES user(id)
+            FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
         )
         ''')
         
         self.to_do_connection.commit()
 
+    def create_user_taskList():
+        pass
  
 
     #* USERS FUNKTIONS
@@ -104,28 +100,29 @@ class DatabasManager:
     
     # Adds a task to current list
     def add_tasks(self, user_id: int, task: str) -> None:
-        self.do_query_data('''INSERT INTO task_list (user_id, task) VALUES (?, ?)''',(user_id, task,)) 
+        self.do_query_data('''SELECT MAX(task_number) FROM task_list WHERE user_id=?''', (user_id,))
+        last_task_number = self.cursor.fetchone()[0] or 0
+        new_task_number = last_task_number + 1
+        
+        self.do_query_data('''INSERT INTO task_list (user_id, task, task_number) VALUES (?, ?, ?)''', (user_id, task, new_task_number))
+        
         self.to_do_connection.commit()
         return self.cursor.lastrowid
     
     #* Remove One task
     def remove_task(self, task_id:int, user_id:int) -> None:
-        self.do_query_data('''DELETE FROM task_list WHERE id=? AND user_id=?''',(task_id,user_id,))
+        self.do_query_data('''DELETE FROM task_list WHERE task_number=? AND user_id=?''',(task_id, user_id,))
         self.to_do_connection.commit()
     
     
     # Pick a task(ID) and update it
-    def update_task(self, task_id: int, task: str) -> None:
-        self.do_query_data('''UPDATE task_list SET task=? WHERE id=?''',(task, task_id,))
+    def update_task(self, task_id: int, task: str, user_id:int ) -> None:
+        self.do_query_data('''UPDATE task_list SET task=? WHERE task_number=? AND user_id=?''',(task, task_id, user_id))
         self.to_do_connection.commit()
 
   
     # Update status of the selected task. True/False
-    def update_status(self, status: int, task_id: int):
-        self.do_query_data('''UPDATE task_list SET status=? WHERE id=?''',(status, task_id,))
+    def update_status(self, status: int, task_id: int, user_id:int):
+        self.do_query_data('''UPDATE task_list SET status=? WHERE task_number=? AND user_id=?''',(status, task_id, user_id))
         self.to_do_connection.commit()
-        # return self.cursor.lastrowid
-        
-                
-            # Remove a task
     
