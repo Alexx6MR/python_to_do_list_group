@@ -39,8 +39,7 @@ class User:
         
     def Login(self, username:str, password:str)->None:
         logged_user: dict = self.databas.login_user(username=username, password=password)
-                
-        if(logged_user == None):    
+        if(logged_user is None):    
             return None
         else:
             self.set_user(user_id=logged_user["id"], user_name=logged_user["username"])
@@ -50,7 +49,7 @@ class User:
     #* Register
     def Register(self,  username:str, password:str)->None:
         register_user: int = self.databas.register_user(username=username, password=password)
-        if(register_user == None):
+        if(register_user is None):
             return None
         else:
             return register_user
