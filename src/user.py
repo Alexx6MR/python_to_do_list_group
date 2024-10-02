@@ -5,8 +5,6 @@ class User:
     def __init__(self):
         self.user_id: int
         self.user_name: str
-        self.user_taskId: int
-        self.task_list: list = []
         self.databas = DatabasManager()
         self.interface = UI()
     
