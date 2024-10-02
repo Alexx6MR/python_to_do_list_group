@@ -37,11 +37,11 @@ class UI:
          #* Input to choose a option Obs: I use pyinputplus for validation
          #* UserName input
         print("_________________")
-        user_name_input:str = pyip.inputStr("Username: ", blockRegexes=[r'[^a-zA-Z]'])  
+        user_name_input:str = pyip.inputStr("Username: ")  
         
         #* Password input
         print("_________________")
-        user_password_input:str = pyip.inputStr("Password: ", blockRegexes=[r'[^a-zA-Z]'], ) 
+        user_password_input:str = pyip.inputStr("Password: ") 
         
         return dict(username=user_name_input.lower(), password=user_password_input.lower())
     
