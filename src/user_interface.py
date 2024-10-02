@@ -7,11 +7,11 @@ class UI:
     
 
     #* This is the Menu that let the users take a decision.
-    def MenuUI(self, menuOptions:list[dict]=[], userInputText: str = "")->None:
+    def MenuUI(self, menuOptions:list[dict]=[], userInputText: str = "", menu_title: str = "")->None:
         optionLength:int = len(menuOptions)
     
         print()
-        print("_______Menu_____")
+        print(f"_______{menu_title}_______")
         print()
     
         #* Loop to print all the title from the option dictionary in order
@@ -37,11 +37,11 @@ class UI:
          #* Input to choose a option Obs: I use pyinputplus for validation
          #* UserName input
         print("_________________")
-        user_name_input:str = pyip.inputStr("Username: ")  
+        user_name_input:str = pyip.inputStr("Username: ", blockRegexes=[r'[^a-zA-Z]'])  
         
         #* Password input
         print("_________________")
-        user_password_input:str = pyip.inputStr("Password: ") 
+        user_password_input:str = pyip.inputStr("Password: ", blockRegexes=[r'[^a-zA-Z]'], ) 
         
         return dict(username=user_name_input.lower(), password=user_password_input.lower())
     
@@ -53,12 +53,23 @@ class UI:
         else:
            return pyip.inputNum(message) 
     
-    
-    def Not_task(self, task_list:list, route:callable, message:str):
+    def show_one_task(self, task:dict):
+        new_status: str
+        if task["status"] == 0:
+            new_status = "Uncompleted"
+        else:
+            new_status = "Completed"
+            
+        print(f"Id: {task["task_number"]}, Task: {task["task"]}, Status: {new_status}")
+
+            
+    #* Function to Show all the task from 
+    def show_tasks(self, task_list:list) -> list:
+        print("Actual task on list: ")
+        print()
+       
         if len(task_list) <= 0:
-            print()
-            print(message)
-            self.MenuUI(userInputText="Select a number: ", 
-                menuOptions=[
-                {"title": "Go back", "action":route},
-            ])
+            print("---You don't have any tasks yet---")
+        else:
+            for task in task_list:
+                self.show_one_task(task=task)

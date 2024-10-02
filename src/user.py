@@ -1,4 +1,4 @@
-from src.Databas import DatabasManager
+from src.databas import DatabasManager
 from src.user_interface import UI
 
 class User: 
@@ -37,49 +37,24 @@ class User:
         
     #* Other Funktions
         
-    def Login(self)->None:
-        print("")
-        print("**Sign In**")
-        print("**Please introduce your userName and Password**")
-        
-        while True:
-            user_input: dict = self.interface.input_menu()
-            logged_user: dict = self.databas.login_user(username=user_input["username"], password=user_input["password"])
+    def Login(self, username:str, password:str)->None:
+        logged_user: dict = self.databas.login_user(username=username, password=password)
                 
-            if(logged_user):    
-                self.set_user(user_id=logged_user["id"], user_name=logged_user["username"])
-                break    
-            else:
-                print("**It seems that you dont have an account, do you want to register?**")
-                self.interface.MenuUI(userInputText="Select a number: ", 
-                    menuOptions=[
-                        {"title": "Sign Up for free", "action":self.Register},
-                        {"title": "Try again", "action":self.Login},
-                    ])
+        if(logged_user == None):    
+            return None
+        else:
+            self.set_user(user_id=logged_user["id"], user_name=logged_user["username"])
+            return logged_user
            
-          
         
     #* Register
-    def Register(self)->None:
+    def Register(self,  username:str, password:str)->None:
+        register_user: int = self.databas.register_user(username=username, password=password)
+        if(register_user == None):
+            return None
+        else:
+            return register_user
+           
+                
     
-        print("")
-        print("**Sign Up**")
-        print("**Please introduce your userName and Password**")
-        
-        def login():
-            return
-        
-        while True:
-            user_input: dict = self.interface.input_menu()
-            res_status: int = self.databas.register_user(username=user_input["username"], password=user_input["password"])
-            if(res_status == 403):
-                print("**It seems like this account is already registered, do you want to log in?**")
-                self.interface.MenuUI(userInputText="Select a number: ", 
-                menuOptions=[
-                {"title": "Try again", "action":self.Register},
-                {"title": "Log in", "action":login},
-               
-
-            ])
-            break
                 
