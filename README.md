@@ -8,6 +8,8 @@ This is the group project of nackademin's programming course 1 of the DevsOps en
 3. [Viktor Luu](https://github.com/Viktorluu)
 4. [Khilkhil Hossain](https://github.com/psyduckkills)
 5. [Nathan Feldman](https://github.com/NathanJFeldman)
+6. [William](https://github.com/DaddyFrosty)
+
 
 
 ## Project Description
