@@ -13,25 +13,10 @@ class User:
     
     
     #* Setters
-    
-    def set_task_list(self, tasks_list:list[dict])->None:
-       self.task_list.append(tasks_list)
-    
-    def set_one_task(self, task:dict) ->None:
-        self.task_list.append(dict(task))
-    
     def set_user(self, user_id:int, user_name:str)->None:
         self.user_id = user_id
         self.user_name = user_name
-       
-    #* Getters
-    def get_all_task(self,)->list:
-        return self.task_list
-        
-        
-    def get_user_info(self)->list:
-        return dict(user_id=self.user_id, user_name=self.user_name, task_list=self.task_list)
-        
+               
         
         
         
@@ -39,8 +24,8 @@ class User:
         
     def Login(self, username:str, password:str)->None:
         logged_user: dict = self.databas.login_user(username=username, password=password)
-        if(logged_user is None):    
-            return None
+        if(logged_user == 404):    
+            return 404
         else:
             self.set_user(user_id=logged_user["id"], user_name=logged_user["username"])
             return logged_user
@@ -49,9 +34,12 @@ class User:
     #* Register
     def Register(self,  username:str, password:str)->None:
         register_user: int = self.databas.register_user(username=username, password=password)
-        if(register_user is None):
-            return None
+        if(register_user == 404):
+            print("**It seems like this account is already registered, do you want to log in?**")
+            return 404
         else:
+            print()
+            print(f"---User {username} successfully registered---")
             return register_user
            
                 

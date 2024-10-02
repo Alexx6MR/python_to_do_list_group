@@ -32,7 +32,7 @@ def login_screen()->None:
         user_input: dict = interface.input_menu()
         logged_user:dict = current_user.Login(username=user_input["username"], password=user_input["password"])
         
-        if(logged_user == None):    
+        if(logged_user == 404):    
             print("**It seems that you dont have an account, do you want to register?**")
             interface.MenuUI(userInputText="Select a number: ", 
                 menuOptions=[
@@ -53,8 +53,7 @@ def register_screen()->None:
         user_input: dict = interface.input_menu()
         res = current_user.Register(username=user_input["username"], password=user_input["password"])
         
-        if(res == 403):
-            print("**It seems like this account is already registered, do you want to log in?**")
+        if(res == 404):
             interface.MenuUI(
                 menu_title="error trying to register a user",
                 userInputText="Select a number: ", 

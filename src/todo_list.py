@@ -10,7 +10,8 @@ class ToDoList:
     #* Takes a task submitted by the user and sends it to the database
     def add_tasks(self, user_id:int, task:str):
         self.databas.add_tasks(user_id=user_id, task=task)
-        print(f"The task was created successfully")
+        print()
+        print("---The task was created successfully---")
     
     
     #* Gets all tasks from the database and returns them to the user

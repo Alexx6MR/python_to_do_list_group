@@ -61,14 +61,12 @@ class DatabasManager:
         
         if(existing_user):
             print()
-            print("****Server Response: User already exist***")
+            print("****Server Response: User already exist****")
             print()
-            return None
+            return 404
         else:
             self.do_query_data('''INSERT INTO user (username, password) VALUES (?, ?)''', (username, password,))
             self.to_do_connection.commit()
-            print(f"user {username} successfully registered.")
-            return existing_user
             
             
     #* Login system
@@ -83,7 +81,7 @@ class DatabasManager:
             print()
             print("****Server Response: User doesn't exist***")
             print()
-            return None
+            return 404
         
         
         
