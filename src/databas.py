@@ -19,6 +19,10 @@ class DatabasManager:
                 self.cursor.execute(sql, data)
                 self.logger.log_db_query_data(sql, data)
         except Exception as e:
+            if data is None:
+                self.logger.log_db_query(sql)
+            else:
+                self.logger.log_db_query_data(sql, data)
             print(f'DB Error: {e}')
             self.logger.log_error(f'DB Error: {e}')
             # self.to_do_connection.rollback()
